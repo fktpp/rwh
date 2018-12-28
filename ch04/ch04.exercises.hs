@@ -1,5 +1,7 @@
 -- file: ch04/ch04.exercises.hs
-import Data.List
+module Test where
+
+import Data.List()
 import Data.Char (digitToInt, isDigit)
 
 safeHead :: [a] -> Maybe a
@@ -66,7 +68,7 @@ data Result = Result {
 
 newacc x y char = digitToInt char * 10 ^ x + y
 
-stepResult _ (Result {digit = d, result = Left e})      = Result { digit = d + 1, result = Left e }
+stepResult _ Result{digit = d, result = Left e}      = Result { digit = d + 1, result = Left e }
 stepResult c r
         | not $ isDigit c               = Result { digit = d + 1, result = Left ("non-digit '" ++ [c] ++ "'") }
         | otherwise                     = Result { digit = d + 1, result = Right (newacc d acc c) }
@@ -112,7 +114,7 @@ mygroupByFoldr f list = fst $ foldr stepGroup ([], Nothing) list
                         | otherwise             = ([x]:(y:ys), Just x)
 
 mygroupByFoldl :: (a -> a -> Bool) -> [a] -> [[a]]
-mygroupByFoldl f  = foldl stepGroup [] 
+mygroupByFoldl f  = foldl stepGroup []
         where
                 stepGroup [] x          = [[x]]
                 stepGroup xs z
@@ -126,7 +128,7 @@ mygroupByFoldl f  = foldl stepGroup []
 {-- above implementation does not pass test: groupBy (<) [1,2,3,2,0,0,3,3,1,0] -}
 
 myanyFoldr :: Foldable t => (a -> Bool) -> t a -> Bool
-myanyFoldr f  = foldr orfunc False 
+myanyFoldr f  = foldr orfunc False
         where
                 orfunc a b = f a || b
 
@@ -135,4 +137,12 @@ myanyFoldl f  = foldl orfunc False
     where
         orfunc a b = a || f b
 
+-- myCycleFoldr :: [a] -> [a]
+-- myCycleFoldl :: [a] -> [a]
+
+-- myWordsFoldr :: String -> [String]
+-- myWordsFoldl :: String -> [String]
+
+-- myUnlinesFoldr :: [String] -> String
+-- myUnlinesFoldl :: [String] -> String
 
